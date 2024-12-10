@@ -5,9 +5,4 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   base: '/ParticleTodo/',
   plugins: [vue()],
-  resolve: {
-    alias: [
-
-    ]
-  }
 })

@@ -1,5 +1,4 @@
 <script>
-import ParticalImage from './ParticleImage.vue'
 import { createApp } from 'vue';
 
 export default {
@@ -12,15 +11,14 @@ export default {
     },
     removeItem: Function
   },
-  components: {
-    ParticalImage
-  },
   methods: {
-    openParticleImageOverlay() {
+    async openParticleImageOverlay() {
+      const { default: ParticleImage } = await import('./ParticleImage.vue');
+
       const cont = document.createElement("div");
       document.body.appendChild(cont);
 
-      const app = createApp(ParticalImage, {
+      const app = createApp(ParticleImage, {
         imageURL: this.value.img,
         onClose: () => {
           app.unmount();

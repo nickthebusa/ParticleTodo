@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue";
-import p5 from "p5";
 import { CoFullscreen } from '@kalimahapps/vue-icons';
 import { CoFullscreenExit } from '@kalimahapps/vue-icons';
 import { ClWindowClose } from '@kalimahapps/vue-icons';
@@ -32,6 +31,7 @@ const MIN_FORCE = defineModel('MIN_FORCE', { default: 0 });
 
 const proxyURL = "https://api.allorigins.win/raw?url=";
 
+let p5 = null;
 let p;
 
 let fullscreenOff = ref(true);
@@ -146,16 +146,22 @@ function switchFullscreen(goFullscreen) {
     document.exitFullscreen();
   }
 }
-onMounted(() => {
+onMounted(async () => {
+  p5 = (await import("p5")).default;
   currentSketch = new p5(sketch);
   document.addEventListener("fullscreenchange", handleFullscreenChange);
 })
 
 onUnmounted(() => {
   particles = [];
+  if (currentSketch) {
+    currentSketch.remove();
+    currentSketch = null;
+  }
   if (sketchContainer.value) {
     sketchContainer.value.innerHTML = '';
   }
+  p5 = null;
   document.removeEventListener("fullscreenchange", handleFullscreenChange);
 })
 

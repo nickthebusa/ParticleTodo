@@ -1,0 +1,19 @@
+
+- have the model create a function that gets the part of the background that an element is at
+  (the ascii TODO) and then creates the most contrasting color based of the bg image's color
+
+- make each todo list item a components (like a card or sticky note), and make it so u can move them around
+
+- start creating a theme component, where there like 4 colors and you can save your own.
+
+- use local storage to save the TODOs
+
+- add some animations to the project
+
+- create a notepad(for drawing) component
+
+- add control for saving prefered size of image
+
+- save items and settings 
+
+- delete items

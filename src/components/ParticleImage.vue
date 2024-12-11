@@ -16,6 +16,7 @@ const emit = defineEmits(["close"]);
 const sketchContainer = ref(null);
 const srcImgRef = ref(null);
 const loading = ref(true);
+const errorLoading = ref('');
 
 let WIDTH;
 let HEIGHT;
@@ -29,7 +30,8 @@ const resolutionValue = defineModel('resolutionValue', { default: 7 });
 const MAX_FORCE = defineModel('MAX_FORCE', { default: 10 });
 const MIN_FORCE = defineModel('MIN_FORCE', { default: 0 });
 
-const proxyURL = "https://api.allorigins.win/raw?url=";
+//const proxyURL = "https://api.allorigins.win/raw?url=";
+const proxyURL = "https://imageproxynode.onrender.com/";
 
 let p5 = null;
 let p;
@@ -44,9 +46,16 @@ const sketch = (e) => {
 
   p.preload = () => {
     const combinedURL = `${proxyURL}${srcImgRef.value.src}`;
-    img = p.loadImage(combinedURL, () => {
-      loading.value = false;
-    });
+    img = p.loadImage(combinedURL,
+      () => {
+        // on success
+        loading.value = false;
+        errorLoading.value = "";
+      }, () => {
+        // on error
+        loading.value = false;
+        errorLoading.value = "problem loading the image sry :(";
+      });
   }
   p.setup = () => {
     WIDTH = srcImgRef.value.width;
@@ -203,6 +212,10 @@ onUnmounted(() => {
       <div class="loader"></div>
     </div>
 
+    <div class="error-cont" v-show="errorLoading">
+      <div>{{ errorLoading }}</div>
+    </div>
+
   </div>
 </template>
 
@@ -308,7 +321,8 @@ body {
   font-size: 2.2rem;
 }
 
-.loading-cont {
+.loading-cont,
+.error-cont {
   position: fixed;
   top: 50%;
   left: 50%;

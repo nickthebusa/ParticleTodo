@@ -9,7 +9,7 @@ import { CdSymbolColor } from '@kalimahapps/vue-icons';
   </div>
 
   <div class="THEMES">
-
+    <div>theme settings:</div>
   </div>
 </template>
 
@@ -17,5 +17,9 @@ import { CdSymbolColor } from '@kalimahapps/vue-icons';
 .themes-menu-btn {
   font-size: 2.3rem;
   cursor: pointer;
+}
+
+.THEMES {
+  display: none;
 }
 </style>
